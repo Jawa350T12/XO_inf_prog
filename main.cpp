@@ -46,7 +46,7 @@ void printPole(){
     }
 }
 
-bool checkPole(TochPlayer player){
+bool checkPole(){
 
     for(int i=0;i<5;++i){
         for(int j =0;j<5;++j){
@@ -92,7 +92,7 @@ int main() {
         cin >> key;
         string s = playerXode(player, key);
         printPole();
-        checkPole(player);
+        checkPole();
     }
     return 0;
 }
