@@ -92,7 +92,7 @@ int main() {
         cin >> key;
         string s = playerXode(player, key);
         printPole();
-
+        checkPole(player);
     }
     return 0;
 }
