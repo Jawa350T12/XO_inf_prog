@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>
 #include <random>
 #include <ctime>
 #include <conio.h>
@@ -46,28 +47,59 @@ void printPole(){
     }
 }
 
+bool checkPustoPole(){
+    int k=0;
+    for(int i=0;i<5;++i){
+        for(int j=0;j<5;++j){
+            if(pole[i][j]=="O"||pole[i][j]=="X"){
+                k++;
+            }
+        }
+    }
+    if(k==9){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 bool checkPole(){
 
     for(int i=0;i<5;++i){
         for(int j =0;j<5;++j){
             if((pole[i][j]=="O" && pole[i][j+2]=="O" && pole[i][j+4]=="O")||
-            (pole[i+2][j]=="O" && pole[i+2][j+2]=="O" && pole[i+2][j+4]=="O")||
-            (pole[i+4][j]=="O" && pole[i+4][j+2]=="O" && pole[i+4][j+4]=="O")||
-            (pole[i][j]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j+4]=="O")||
-            (pole[i][j+4]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j]=="O")){
+                (pole[i+2][j]=="O" && pole[i+2][j+2]=="O" && pole[i+2][j+4]=="O")||
+                (pole[i+4][j]=="O" && pole[i+4][j+2]=="O" && pole[i+4][j+4]=="O")||
+                (pole[i][j]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j+4]=="O")||
+                (pole[i][j+4]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j]=="O")||
+                (pole[i][j]=="O" && pole[i+2][j]=="O" && pole[i+4][j]=="O")||
+                (pole[i][j+2]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j+2]=="O")||
+                (pole[i][j+4]=="O" && pole[i+2][j+4]=="O" && pole[i+4][j+4]=="O")||
+                (pole[i][j]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j+4]=="O")||
+                (pole[i][j+4]=="O" && pole[i+2][j+2]=="O" && pole[i+4][j]=="O")){
                 return false;
             }
-            if((pole[i][j]=="X" && pole[i][j+2]=="X" && pole[i][j+4]=="X")||
+            else if((pole[i][j]=="X" && pole[i][j+2]=="X" && pole[i][j+4]=="X")||
                (pole[i+2][j]=="X" && pole[i+2][j+2]=="X" && pole[i+2][j+4]=="X")||
                (pole[i+4][j]=="X" && pole[i+4][j+2]=="X" && pole[i+4][j+4]=="X")||
+               (pole[i][j]=="X" && pole[i+2][j+2]=="X" && pole[i+4][j+4]=="X")||
+               (pole[i][j+4]=="X" && pole[i+2][j+2]=="X" && pole[i+4][j]=="X")||
+               (pole[i][j]=="X" && pole[i+2][j]=="X" && pole[i+4][j]=="X")||
+               (pole[i][j+2]=="X" && pole[i+2][j+2]=="X" && pole[i+4][j+2]=="X")||
+               (pole[i][j+4]=="X" && pole[i+2][j+4]=="X" && pole[i+4][j+4]=="X")||
                (pole[i][j]=="X" && pole[i+2][j+2]=="X" && pole[i+4][j+4]=="X")||
                (pole[i][j+4]=="X" && pole[i+2][j+2]=="X" && pole[i+4][j]=="X")){
                 return false;
             }
+            else if(checkPustoPole()){
+                return false;
+            }
+            else{
+                return true;
+            }
         }
     }
 
-    return true;
 }
 
 string playerXode(TochPlayer igrokII,char key){
@@ -88,11 +120,13 @@ int main() {
     char key='\\';
     pustopole();
     TochPlayer player = newPlayerII(randXo());
-    while(key!='q') {
+    while(key!='q'&&checkPole()) {
+
         cin >> key;
+        Sleep(3000);
         string s = playerXode(player, key);
         printPole();
-        checkPole();
     }
+
     return 0;
 }
